@@ -2,13 +2,20 @@
 
 setfont ter-132b
 
-echo 'Please, enter your username: '
-read USERNAME
+SURE='0'
 
+while [ !$SURE ]; do
+	echo 'Please, enter your username: '
+	read USERNAME
+	clear
+	echo "Is {$USERNAME} correct?"
+	read SURE
+	if 
+done
 echo 'Please, enter a name for your computer: '
 read COMPUTERNAME
 
-echo 'Please, enter /Region/City: '
+echo 'Please, enter Region/City: '
 read TIME
 
 PASSWORD='1'
@@ -40,17 +47,17 @@ mount $PART2 /mnt
 mkdir /mnt/boot
 mount $PART1 /mnt/boot
 
-pacstrap -K /mnt linux-zen linux-firmware base efibootmgr neovim base-devel git fish
+pacstrap -K /mnt linux-zen linux-firmware base efibootmgr reflector neovim base-devel git fish
 
 genfstab -U /mnt > /mnt/etc/fstab
 
 arch-chroot /mnt bash <<EOF
-ln -sf "/usr/share/zoneinfo$TIME" /etc/localtime
+ln -sf /usr/share/zoneinfo/$TIME /etc/localtime
 hwclock --systohc
 
 echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen
 locale-gen
-echo 'LANG=en_US.UTF-8' > ./locale.conf
+echo 'LANG=en_US.UTF-8' > /etc/locale.conf
 
 echo $COMPUTERNAME > /etc/hostname
 
