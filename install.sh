@@ -23,19 +23,18 @@ setvar 'your Region' region
 setvar 'your City' city
 
 while true; do
-        local checkPassword
+        checkPassword=0
 
-        read -psr 'Please, enter your password: ' password
-        read -psr 'Please, reenter your password: ' checkPassword
-
-        clear
+        read -rsp 'Please, enter your password: ' password
+        echo
+        read -rsp 'Please, reenter your password: ' checkPassword
+        echo
 
         if [[ $password == $checkPassword ]]; then
                 break
         fi
 
         echo 'Passwords do not match.'
-        sleep 1
 done
 
 lsblk
